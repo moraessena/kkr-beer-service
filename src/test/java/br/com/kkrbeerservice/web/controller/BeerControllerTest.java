@@ -1,11 +1,14 @@
 package br.com.kkrbeerservice.web.controller;
 
-import br.com.kkrbeerservice.domain.Beer;
+import br.com.kkrbeerservice.repositories.BeerRepository;
+import br.com.kkrbeerservice.services.BeerService;
 import br.com.kkrbeerservice.web.model.BeerDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -21,6 +24,12 @@ class BeerControllerTest {
     @Autowired
     MockMvc mockMvc;
 
+    @MockBean
+    BeerService beerService;
+
+    @MockBean
+    BeerRepository beerRepository;
+
     @Autowired
     ObjectMapper objectMapper;
 
@@ -29,7 +38,7 @@ class BeerControllerTest {
                 .beerName("Custom Beer")
                 .beerStyle(BeerDto.Style.ALE)
                 .price(new BigDecimal("2.99"))
-                .upc(7891149102150L)
+                .upc("07891149102150")
                 .build();
     }
 
