@@ -1,5 +1,6 @@
 package br.com.kkrbeerservice.web.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
@@ -19,23 +20,32 @@ import java.util.UUID;
 public class BeerDto {
     @Null
     private UUID id;
+
     @NotBlank
     private String beerName;
+
     @NotNull
     private Style beerStyle;
+
     @NotNull
     @Positive
     private Long upc;
+
     @NotNull
     @Positive
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private BigDecimal price;
     private Integer stockQuantity;
 
     @Null
     private Integer version;
+
     @Null
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.ssZ", shape = JsonFormat.Shape.STRING)
     private LocalDateTime createdAt;
+
     @Null
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.ssZ", shape = JsonFormat.Shape.STRING)
     private LocalDateTime updatedAt;
 
     public enum Style {
