@@ -2,6 +2,7 @@ package br.com.kkrbeerservice.domain;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -21,7 +22,8 @@ public class Beer {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(length = 36, columnDefinition = "varchar", updatable = false)
+    @Type(type = "org.hibernate.type.UUIDCharType")
+    @Column(updatable = false)
     private UUID id;
     private String name;
     private String style;
@@ -37,4 +39,13 @@ public class Beer {
     private LocalDateTime createdAt;
     @LastModifiedDate
     private LocalDateTime updatedAt;
+
+    public void updateWith(Beer other) {
+        this.name = other.name;
+        this.style = other.style;
+        this.upc = other.upc;
+        this.price = other.price;
+        this.minOnHand = other.minOnHand;
+        this.quantityToBrew = other.quantityToBrew;
+    }
 }

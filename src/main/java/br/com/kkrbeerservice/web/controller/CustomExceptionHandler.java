@@ -1,9 +1,11 @@
 package br.com.kkrbeerservice.web.controller;
 
+import br.com.kkrbeerservice.exceptions.NotFoundException;
+import br.com.kkrbeerservice.web.model.ErrorDto;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -26,6 +28,12 @@ public class CustomExceptionHandler {
     public ResponseEntity<List<String>> constraintHandler(BindException ex) {
         List<String> errors = ex.getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(toList());
         return ResponseEntity.badRequest().body(errors);
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ErrorDto> constraintHandler(NotFoundException ex) {
+        ErrorDto errorDto = new ErrorDto(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorDto);
     }
 
 }

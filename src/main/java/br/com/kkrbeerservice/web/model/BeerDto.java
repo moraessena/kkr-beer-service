@@ -41,11 +41,11 @@ public class BeerDto {
     private Integer version;
 
     @Null
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.ssZ", shape = JsonFormat.Shape.STRING)
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.ss", shape = JsonFormat.Shape.STRING)
     private LocalDateTime createdAt;
 
     @Null
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.ssZ", shape = JsonFormat.Shape.STRING)
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.ss", shape = JsonFormat.Shape.STRING)
     private LocalDateTime updatedAt;
 
     public enum Style {
