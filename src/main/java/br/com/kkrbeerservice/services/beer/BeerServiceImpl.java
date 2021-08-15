@@ -1,10 +1,13 @@
-package br.com.kkrbeerservice.services;
+package br.com.kkrbeerservice.services.beer;
 
 import br.com.kkrbeerservice.domain.Beer;
 import br.com.kkrbeerservice.exceptions.NotFoundException;
 import br.com.kkrbeerservice.repositories.BeerRepository;
 import br.com.kkrbeerservice.web.mappers.BeerMapper;
 import br.com.kkrbeerservice.web.model.BeerDto;
+import br.com.kkrbeerservice.web.model.PagedBeerDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -45,5 +48,26 @@ public class BeerServiceImpl implements BeerService {
             existing = beerRepository.save(beer);
         }
         return beerMapper.beertoBeerDto(existing);
+    }
+
+    @Override
+    public PagedBeerDto listBeers(Pageable page) {
+        Page<BeerDto> result = beerRepository.findAll(page).map(beerMapper::beertoBeerDto);
+        if (!result.hasContent()) throw new NotFoundException("Beer not found");
+        return new PagedBeerDto(result.getContent(), page, result.getTotalElements());
+    }
+
+    @Override
+    public PagedBeerDto listBeersByName(String name, Pageable page) {
+        Page<BeerDto> result = beerRepository.findByName(name, page).map(beerMapper::beertoBeerDto);
+        if (!result.hasContent()) throw new NotFoundException("Beer not found");
+        return new PagedBeerDto(result.getContent(), page, result.getTotalElements());
+    }
+
+    @Override
+    public PagedBeerDto listBeersByNameAndStyle(String name, String style, Pageable page) {
+        Page<BeerDto> result = beerRepository.findByNameAndStyle(name, style, page).map(beerMapper::beertoBeerDto);
+        if (!result.hasContent()) throw new NotFoundException("Beer not found");
+        return new PagedBeerDto(result.getContent(), page, result.getTotalElements());
     }
 }
