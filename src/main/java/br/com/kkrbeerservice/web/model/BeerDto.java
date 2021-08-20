@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Positive;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -17,7 +18,10 @@ import java.util.UUID;
 @AllArgsConstructor
 @EqualsAndHashCode(of = {"id"})
 @ToString(of = {"id", "beerName"})
-public class BeerDto {
+public class BeerDto implements Serializable {
+
+    private static final long serialVersionUID = 8831246080655789893L;
+
     @Null
     private UUID id;
 

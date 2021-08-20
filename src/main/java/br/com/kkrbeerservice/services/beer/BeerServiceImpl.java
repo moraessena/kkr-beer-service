@@ -6,6 +6,7 @@ import br.com.kkrbeerservice.repositories.BeerRepository;
 import br.com.kkrbeerservice.web.mappers.BeerMapper;
 import br.com.kkrbeerservice.web.model.BeerDto;
 import br.com.kkrbeerservice.web.model.PagedBeerDto;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,7 @@ public class BeerServiceImpl implements BeerService {
     }
 
     @Override
+    @Cacheable(cacheNames = "beerListCache", key = "#id.toString()")
     public BeerDto getById(UUID id) {
         Optional<Beer> beer = beerRepository.findById(id);
         return beer.map(beerMapper::beertoBeerDto).orElseThrow(() -> new NotFoundException("Beer not found"));
@@ -51,6 +53,7 @@ public class BeerServiceImpl implements BeerService {
     }
 
     @Override
+    @Cacheable(cacheNames = "beerListCache", key = "#page.hashCode()")
     public PagedBeerDto listBeers(Pageable page) {
         Page<BeerDto> result = beerRepository.findAll(page).map(beerMapper::beertoBeerDto);
         if (!result.hasContent()) throw new NotFoundException("Beer not found");
@@ -58,6 +61,7 @@ public class BeerServiceImpl implements BeerService {
     }
 
     @Override
+    @Cacheable(cacheNames = "beerListCache", key = "((#name != null)?#name:'no_name').concat(#page.hashCode())")
     public PagedBeerDto listBeersByName(String name, Pageable page) {
         Page<BeerDto> result = beerRepository.findByName(name, page).map(beerMapper::beertoBeerDto);
         if (!result.hasContent()) throw new NotFoundException("Beer not found");
@@ -65,6 +69,7 @@ public class BeerServiceImpl implements BeerService {
     }
 
     @Override
+    @Cacheable(cacheNames = "beerListCache", key = "((#name != null)?#name:'no_name').concat((#style != null)?#name:'no_style').concat(#page.hashCode())")
     public PagedBeerDto listBeersByNameAndStyle(String name, String style, Pageable page) {
         Page<BeerDto> result = beerRepository.findByNameAndStyle(name, style, page).map(beerMapper::beertoBeerDto);
         if (!result.hasContent()) throw new NotFoundException("Beer not found");
