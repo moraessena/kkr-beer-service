@@ -11,6 +11,8 @@ public interface BeerService {
 
     BeerDto getById(UUID id);
 
+    BeerDto getByUPC(String upc);
+
     BeerDto createOrUpdate(UUID id, BeerDto beerDto);
 
     PagedBeerDto listBeers(Pageable page);

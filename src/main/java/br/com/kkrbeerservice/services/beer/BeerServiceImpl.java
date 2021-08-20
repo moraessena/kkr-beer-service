@@ -32,9 +32,16 @@ public class BeerServiceImpl implements BeerService {
     }
 
     @Override
-    @Cacheable(cacheNames = "beerListCache", key = "#id.toString()")
+    @Cacheable(cacheNames = "beerCache", key = "#id.toString()")
     public BeerDto getById(UUID id) {
         Optional<Beer> beer = beerRepository.findById(id);
+        return beer.map(beerMapper::beertoBeerDto).orElseThrow(() -> new NotFoundException("Beer not found"));
+    }
+
+    @Override
+    @Cacheable(cacheNames = "beerUpcCache", key = "#upc")
+    public BeerDto getByUPC(String upc) {
+        Optional<Beer> beer = beerRepository.findByUpc(upc);
         return beer.map(beerMapper::beertoBeerDto).orElseThrow(() -> new NotFoundException("Beer not found"));
     }
 

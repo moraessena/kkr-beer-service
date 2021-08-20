@@ -11,6 +11,7 @@
     </service>
 
     <cache alias="beerCache" uses-template="default"/>
+    <cache alias="beerUpcCache" uses-template="default"/>
     <cache alias="beerListCache" uses-template="default"/>
 
     <cache-template name="default">

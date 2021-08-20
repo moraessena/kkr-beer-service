@@ -29,6 +29,12 @@ public class BeerController {
         return ResponseEntity.ok(beer);
     }
 
+    @GetMapping(name = "findByUpc", params = {"upc"})
+    public ResponseEntity<BeerDto> getBeerByUpc(@RequestParam("upc") String upc) {
+        BeerDto beer = beerService.getByUPC(upc);
+        return ResponseEntity.ok(beer);
+    }
+
     @GetMapping(name = "listBeers")
     public ResponseEntity<PagedBeerDto> listBeers(
             @PageableDefault(size = 20, direction = Sort.Direction.ASC, sort = {"name"}) Pageable page) {
