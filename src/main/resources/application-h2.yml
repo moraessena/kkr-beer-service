@@ -1,0 +1,11 @@
+spring:
+  h2:
+    console:
+      enabled: true
+  datasource:
+    username: beer_service
+    password: 123
+    url: jdbc:h2:mem:beerdb;DATABASE_TO_LOWER=TRUE;MODE=MYSQL
+    drive-class-name: org.h2.Driver
+  jpa:
+    defer-datasource-initialization: true

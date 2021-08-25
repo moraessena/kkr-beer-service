@@ -1,0 +1,17 @@
+spring:
+  h2:
+    console:
+      enabled: false
+  datasource:
+    username: beer_service
+    password: 123
+    url: jdbc:mysql://localhost:3306/beer_service?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    initialization-mode: always
+  jpa:
+    show-sql: true
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    defer-datasource-initialization: true
+    generate-ddl: true
+    hibernate:
+      dll-auto: create
