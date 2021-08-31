@@ -21,7 +21,7 @@ spring:
         elideSetAutoCommits: true
         maintainTimeStats: false
   jpa:
-    show-sql: true
+    show-sql: false
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect
     defer-datasource-initialization: true
